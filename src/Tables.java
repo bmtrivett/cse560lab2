@@ -13,7 +13,7 @@ public class Tables {
 	
 	public Tables() {
 		machineOpTable = new HashMap<String, char[]>();
-		psuedoOpTable = new HashMap<String, Integer>()
+		psuedoOpTable = new HashMap<String, Integer>();
 		symbolTable = new HashMap<String, String[]>();
 		literalTable = new HashMap<String, String[]>();
 		
