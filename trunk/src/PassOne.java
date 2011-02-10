@@ -79,33 +79,76 @@ public class PassOne {
 				String end = read.substring(9, 14);
 
 				while(end != ".END"){
+					Tables machine = new Tables();
 					if (read.charAt(0) != ';') {
 
 						String firstWord = read.substring(0, 6);
 						if (firstWord != "      "){
-							//add to Table  
-							locationCounter++;
+							String[] tempString = new String[2];
+							String hexLC = Utility.DecimalValueToHex(locationCounter);
+							tempString[0] = hexLC;
+							tempString[1] = "rel";
+							//check with ben on which oens are abs or rel
+							machine.symbolTable.put(firstWord, tempString);
+							
 						}
 
 						String operation = read.substring(9,14);
 						//check to see if it exist in bens table
-						if (opertaion.exist){
-							if("machineop")
+						
+						
+						if (machine.machineOpTable.containsKey(operation) ||
+								machine.psuedoOpTable.containsKey(operation)){
+							if(machine.machineOpTable.containsKey(operation))
 							{
-								//add to machine op table
+							
 								locationCounter++;
 							}
 							else
 							{
-								//location depends on psuedo op
-								locationCounter++;
+								if(operation == ".BLKW")
+								{
+									
+									if(read.charAt(17) == '#')
+									{
+										String length = read.substring(18,23);
+										int lcLength = Integer.parseInt(length);
+										
+										locationCounter = locationCounter + lcLength;
+							
+									}
+									else if(read.charAt(17) == 'x')
+									{
+										String length = read.substring(18,22);
+										int lcLength = Utility.HexToDecimalValue(length);
+										
+										locationCounter += lcLength;
+									}
+									else
+									{
+										//throw a motherfuckin error
+									}
+									
+								}
+								else if(operation == ".STRZ")
+								{
+								String text = read.substring(17);
+								String index = text.substring(18);
+								
+								String quotation = "\"";
+								int index3 = read.indexOf(quotation);
+								
+								String value = read.substring(17, index3);
+								int lc = value.length();
+								locationCounter += lc;
+								
+								}
+								
 							}
 						}
 
-						//if it equals space means blank and add to the 
-						//location counter
 
-						else if(does not exist)
+						else
 						{
 							return "error";
 						}
@@ -135,8 +178,8 @@ public class PassOne {
 						{
 						inLineLiteral = read.substring(index3 + 1, indexNew);
 						}
-						
-						literalTable.add
+						//set it as value zero
+						//literalTable.add
 					}
 
 					String comment = ";";
