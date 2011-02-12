@@ -62,6 +62,8 @@ public class PassOne {
 							tempString[0] = hexLC;
 							tempString[1] = "rel";
 							// check with ben on which oens are abs or rel
+							//one for rel, 0 for abs
+							//rel br,jsr,jmp,ld,ldi,lea,st,sti
 							machine.symbolTable.put(firstWord, tempString);
 
 						}
@@ -89,7 +91,8 @@ public class PassOne {
 												.HexToDecimalValue(length);
 
 										locationCounter += lcLength;
-									} else {
+									} 
+									else {
 										// throw a motherfuckin error
 									}
 
@@ -129,6 +132,7 @@ public class PassOne {
 						if (indexSpace != -1) {
 							inLineLiteral = read.substring(index3 + 1,
 									indexSpace);
+							//value of literal as a string, the value of hex,location counter
 							machine.literalTable.put(inLineLiteral, value);
 						} else if (indexSemi != -1) {
 							inLineLiteral = read.substring(index3 + 1,
